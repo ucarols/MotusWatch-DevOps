@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css"/>
+</head>
+<body th:with="pageTitle='Dashboard', content=~{::content}" th:insert="~{fragments/layout}">
+
+<div th:fragment="content">
+    <div class="linha">
+        <div class="coluna-12">
+            <h1 class="titulo margem-baixo-4">
+                Painel
+            </h1>
+        </div>
+    </div>
+
+    <div class="linha margem-baixo-4">
+        <div class="coluna-6">
+            <div class="card" style="background-color: var(--cor-principal); color: white;">
+                <div class="corpo-card">
+                    <div class="flexivel espaco-entre">
+                        <div>
+                            <h4 class="card-title" th:text="${totalMotos}">0</h4>
+                            <p class="card-text">Total de Motos</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="coluna-6">
+            <div class="card" style="background-color: #28a745; color: white;">
+                <div class="corpo-card">
+                    <div class="flexivel espaco-entre">
+                        <div>
+                            <h4 class="card-title" th:text="${totalUsuarios}">0</h4>
+                            <p class="card-text">Total de Usuários</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="linha">
+        <div class="coluna-12">
+            <div class="card">
+                <div class="cabecalho-card">
+                    <h5 class="titulo-pequeno">
+                        Ações Rápidas
+                    </h5>
+                </div>
+                <div class="corpo-card">
+                    <div class="linha">
+                        <div class="coluna-4 margem-baixo-3">
+                            <a th:href="@{/motos/novo}" class="botao" style="width: 100%;">
+                                Nova Moto
+                            </a>
+                        </div>
+                        <div class="coluna-4 margem-baixo-3">
+                            <a th:href="@{/motos}" class="botao-outline" style="width: 100%;">
+                                Ver Todas as Motos
+                            </a>
+                        </div>
+                        <div class="coluna-4 margem-baixo-3">
+                            <a th:href="@{/usuarios}" class="botao-secundario" style="width: 100%;">
+                                Gerenciar Usuários
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+</body>
+</html>
