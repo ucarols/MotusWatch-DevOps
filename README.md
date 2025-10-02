@@ -41,16 +41,73 @@ O MotusWatch é um sistema de gestão de motos que utiliza classificação por c
 - **Bootstrap Icons** - Ícones
 - **Thymeleaf** - Engine de templates
 
+## Infraestrutura Azure
 
-## Configuração do Banco de Dados
+### Criação dos Serviços via Script PowerShell
 
-### Migrações Flyway
-O projeto utiliza Flyway para versionamento do banco de dados com as seguintes migrações:
+O projeto utiliza um script PowerShell (`scripts/scripts-azure.ps1`) para automatizar a criação de toda a infraestrutura no Azure. O script cria os seguintes recursos:
 
-1. **V1__Create_tables.sql** - Criação das tabelas principais
-2. **V2__Insert_initial_data.sql** - Dados iniciais
-3. **V3__Add_audit_fields.sql** - Campos de auditoria
-4. **V4__Create_indexes.sql** - Índices para otimização
+#### Recursos Criados
+
+1. **Resource Group** (`rg-motuswatch`)
+  - Grupo de recursos na região Brazil South para organizar todos os componentes
+
+2. **SQL Server** (`sqlmotuswatch`)
+  - Servidor de banco de dados SQL Server
+  - Usuário administrador: `adminmotuswatch`
+  - Localização: Brazil South
+
+3. **SQL Database** (`dbmotuswatch`)
+  - Banco de dados SQL Server
+
+4. **App Service Plan** (`motuswatch`)
+
+7 **Web App** (`motuswatch-rm559123`)
+  - Integração com GitHub Actions para CI/CD
+
+#### Como Executar o Script
+
+```powershell
+# Navegue até o diretório de scripts
+cd scripts
+
+# Execute o script (requer Azure CLI instalado e autenticado)
+.\scripts-azure.ps1
+```
+
+O script aceita parâmetros customizáveis:
+```powershell
+.\scripts-azure.ps1 `
+  -ResourceGroup "rg-motuswatch" `
+  -WEBAPP_NAME "motuswatch-rm559123" `
+  -LOCATION "brazilsouth" `
+  -SqlServerName "sqlmotuswatch" `
+  -DbName "dbmotuswatch"
+```
+
+### Banco de Dados
+
+#### Configuração SQL Server Azure
+
+- **Servidor**: `sqlmotuswatch.database.windows.net`
+- **Banco de dados**: `dbmotuswatch`
+- **Porta**: 1433
+
+
+### Processo de Deploy
+
+O deploy é totalmente automatizado via **GitHub Actions** e ocorre em duas etapas:
+
+1. Faça commit e push das alterações para a branch `main`:
+```bash
+git add .
+git commit -m "Suas alterações"
+git push origin main
+```
+
+2. O GitHub Actions será acionado automaticamente
+3. Acompanhe o progresso na aba "Actions" do repositório GitHub
+4. Após conclusão, a aplicação estará disponível em: `https://motuswatch-rm559123.azurewebsites.net`
 
 ## Como Executar
 
