@@ -111,7 +111,6 @@ git push origin main
 
 ## Como Executar
 
-
 ### Passos
 1. Clone o repositório  
 2. Execute o comando: `mvn spring-boot:run`
